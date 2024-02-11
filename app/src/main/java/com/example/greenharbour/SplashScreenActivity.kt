@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.greenharbour.Authorization.SignUpActivity
 import com.example.greenharbour.databinding.ActivitySplashScreenBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -23,7 +25,10 @@ class SplashScreenActivity : AppCompatActivity() {
 
         Glide.with(this).load(R.raw.tree_growing).into(binding.splashScreenIcon)
         Handler(Looper.getMainLooper()).postDelayed({
+            if(Firebase.auth.currentUser==null)
             startActivity(Intent(this@SplashScreenActivity, SignUpActivity::class.java))
+            else
+                startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
             finish()
         }, 3200)
     }
