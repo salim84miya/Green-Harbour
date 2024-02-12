@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import com.bumptech.glide.Glide
 import com.example.greenharbour.MainActivity
 import com.example.greenharbour.R
 import com.example.greenharbour.databinding.ActivityLoginBinding
@@ -18,9 +20,10 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
         setContentView(binding.root)
 
-
+        Glide.with(this).load(R.raw.leaves_flow).into(binding.leavesFlowImg)
 
         binding.loginUpBtn.setOnClickListener {
             login = binding.Login.editText?.text.toString()
@@ -40,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.SignUpText.setOnClickListener {
-            startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+            startActivity(Intent(this@LoginActivity,SignUpActivity::class.java))
             finish()
         }
     }
