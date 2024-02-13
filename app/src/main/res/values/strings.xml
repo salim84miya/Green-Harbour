@@ -7,6 +7,8 @@
     <string name="welcome_back">Welcome Back</string>
     <string name="sign_up">Sign Up</string>
     <string name="login_in">Login</string>
+    <string name="location">Location</string>
+    <string name="description">Description</string>
     <string name="have_an_account_login_in">Have an account ? Login In</string>
     <string name="Dont_have_an_account_login_in">Don\'t Have an account ? Sign Up</string>
 </resources>
