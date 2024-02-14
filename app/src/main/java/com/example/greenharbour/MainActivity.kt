@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.greenharbour.Authorization.LoginActivity
+import com.example.greenharbour.Events.CreateEventsActivity
 import com.example.greenharbour.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -18,6 +19,10 @@ class MainActivity : AppCompatActivity() {
             Firebase.auth.signOut()
             startActivity(Intent(this@MainActivity,LoginActivity::class.java))
             finish()
+        }
+
+        binding.createEventBtn.setOnClickListener {
+            startActivity(Intent(this@MainActivity,CreateEventsActivity::class.java))
         }
 
 
