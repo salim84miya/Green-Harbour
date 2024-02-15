@@ -27,6 +27,7 @@
                 android:maxHeight="200dp"
                 android:minHeight="200dp"
                 android:scaleType="centerCrop" />
+
         </androidx.cardview.widget.CardView>
 
         <Button

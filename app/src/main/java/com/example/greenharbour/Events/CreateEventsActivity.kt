@@ -52,6 +52,7 @@ class CreateEventsActivity : AppCompatActivity() {
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
     private var address: String = "random"
+    private lateinit var description :String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,7 +134,7 @@ class CreateEventsActivity : AppCompatActivity() {
         //adding contact details
         binding.contactDetailsEditText.setText(Firebase.auth.currentUser?.email)
 
-        val wordCountLimit = 50
+        val wordCountLimit = 250
 
         //adding validation for description box
         val textWatcher = object:TextWatcher{
@@ -141,9 +142,18 @@ class CreateEventsActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val wordCount = s?.trim()?.split("")?.count()?:0
-                val remainingWords = wordCountLimit-wordCount
-                binding.eventDescriptionBox.helperText ="Words $wordCount/ $wordCountLimit (remaining: $remainingWords)"
+                description = s.toString()
+                val wordCount = s?.toString()?.trim()?.split(" ")?.count()?:0
+                if(wordCount>250){
+                    val trimmedText = s.toString().trim().substring(0,s.toString().trim().lastIndexOf(' ',250*5-1)+1)+"..."
+                    binding.eventDescriptionBoxEditText.setText(trimmedText)
+                    binding.eventDescriptionBoxEditText.setSelection(trimmedText.length)
+                    binding.eventDescriptionBox.helperText = "Word limit exceeded."
+                }else{
+                    binding.eventDescriptionBox.helperText = "Words: $wordCount / 250"
+                }
+//                val remainingWords = wordCountLimit-wordCount
+//                binding.eventDescriptionBox.helperText ="Words $wordCount/ $wordCountLimit (remaining: $remainingWords)"
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -258,6 +268,29 @@ class CreateEventsActivity : AppCompatActivity() {
 
         eventLocationEditText?.setText(address)
         binding.locationBox.visibility = View.VISIBLE
+    }
+
+    //validate all data
+    private fun validateAll():Boolean{
+        return validateDescription(description)
+    }
+
+    //validateDescriptionBox content
+    private fun validateDescription(s:String):Boolean{
+        return when {
+            s.isEmpty()->{
+                binding.eventDescriptionBox.error ="description cannot be empty"
+                false
+            }
+            s.length<50 ->{
+                binding.eventDescriptionBox.error = "description must be at least 50 words long"
+                false
+            }
+            else -> {
+                binding.eventDescriptionBox.error =null
+                true
+            }
+        }
     }
 
 }
