@@ -17,6 +17,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcel
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -131,6 +133,24 @@ class CreateEventsActivity : AppCompatActivity() {
         //adding contact details
         binding.contactDetailsEditText.setText(Firebase.auth.currentUser?.email)
 
+        val wordCountLimit = 50
+
+        //adding validation for description box
+        val textWatcher = object:TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val wordCount = s?.trim()?.split("")?.count()?:0
+                val remainingWords = wordCountLimit-wordCount
+                binding.eventDescriptionBox.helperText ="Words $wordCount/ $wordCountLimit (remaining: $remainingWords)"
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        }
+        binding.eventDescriptionBoxEditText.addTextChangedListener(textWatcher)
 
     }
 
