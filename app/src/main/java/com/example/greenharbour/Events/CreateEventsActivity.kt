@@ -7,12 +7,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.icu.util.Calendar
+import android.icu.util.TimeZone
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcel
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -106,10 +109,14 @@ class CreateEventsActivity : AppCompatActivity() {
 
             val tomorrowInMilliseconds = MaterialDatePicker.todayInUtcMilliseconds() + 86400000
 
+            val constraintsBuilder = CalendarConstraints.Builder()
+                .setValidator(DateValidatorPointForward.from(tomorrowInMilliseconds))
+
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setTitleText("Select date")
-                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .setSelection(tomorrowInMilliseconds)
+                    .setCalendarConstraints(constraintsBuilder.build())
                     .build()
 
             datePicker.show(supportFragmentManager,"tag")
