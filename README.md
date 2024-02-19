@@ -1,6 +1,4 @@
- <div style="text-align:center;">
-  <iframe width="560" height="315" src="https://github.com/salim84miya/Green-Harbour/assets/114942352/ac2f970f-17d5-4bc6-ae71-9c13936f1a06" frameborder="0" allowfullscreen></iframe>
-</div>
+https://github.com/salim84miya/Green-Harbour/assets/114942352/ac2f970f-17d5-4bc6-ae71-9c13936f1a06
                                          
 Project Title: Green Harbour - Tree Plantation Android App
 
