@@ -1,0 +1,19 @@
+Project Title: Green Harbour - Tree Plantation Android App
+
+Description:
+Developed an Android mobile application using Kotlin and Firebase to facilitate tree plantation activities within communities. Integrated Google Maps API for location-based event discovery and participation.
+
+Key Features:
+
+User Authentication: Implemented Firebase authentication for secure user login and registration.
+Event Creation: Enabled users to create tree plantation events with details such as date, time, location, and description.
+Event Discovery: Utilized Google Maps API to display nearby tree plantation events, allowing users to explore and participate.
+Notifications: Integrated push notifications using Firebase Cloud Messaging to keep users updated on event details and reminders.
+
+
+Technologies Used:
+
+Kotlin
+Firebase Authentication, Firestore (Realtime Database)
+Google Maps API
+Firebase Cloud Messaging
