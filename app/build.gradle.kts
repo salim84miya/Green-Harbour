@@ -61,4 +61,9 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.8.0")
 
     implementation("com.squareup.picasso:picasso:2.8")
+
+    implementation("androidx.activity:activity-ktx:1.3.1")
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
+
+
 }
