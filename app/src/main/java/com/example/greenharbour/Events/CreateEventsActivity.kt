@@ -14,6 +14,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -49,6 +50,7 @@ class CreateEventsActivity : AppCompatActivity() {
     private lateinit var description: String
     private lateinit var email: String
     private lateinit var location: String
+    private lateinit var eventTitle:String
     private var gotLocation: Boolean = false
     private lateinit var event: Events
     private lateinit var eventDate: String
@@ -65,11 +67,16 @@ class CreateEventsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateEventsBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
         setContentView(binding.root)
 
         event = Events()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        //adding event title
+        eventTitle = binding.eventTitleBoxEditText.text.toString()
+
 
         //upload image from gallery
         binding.uploadImgGallery.setOnClickListener {
@@ -141,6 +148,7 @@ class CreateEventsActivity : AppCompatActivity() {
             }
 
         })
+
 
         //saving the data
         binding.saveBtn.setOnClickListener {
@@ -352,6 +360,7 @@ class CreateEventsActivity : AppCompatActivity() {
             event.eventDesc = description
             event.eventLocation = address
             event.eventDate = eventDate
+            event.eventName = eventTitle
 
             try {
                 FirebaseStorage.getInstance().getReference("images")

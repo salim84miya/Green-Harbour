@@ -6,7 +6,8 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-   <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -24,10 +25,20 @@
         android:theme="@style/Theme.GreenHarbour"
         tools:targetApi="31">
         <activity
-            android:name=".Events.NearbyEventsActivity"
+            android:name=".Events.EventDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Events.NearbyEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Events.MyEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Events.MyCreatedEventsActivity"
             android:exported="false" />
         <activity
             android:name=".Events.CreateEventsActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
 
         <meta-data
@@ -51,7 +62,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

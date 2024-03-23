@@ -41,9 +41,34 @@
                 android:layout_height="200dp"
                 android:maxHeight="200dp"
                 android:minHeight="200dp"
+                android:src="@drawable/placeholder"
                 android:scaleType="centerCrop" />
 
         </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/eventTitleBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:hint="@string/event_title"
+            android:textColorHint="@color/white"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@id/locationBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/uploadImgGallery"
+            app:layout_constraintVertical_bias="0.06999999">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/eventTitleBoxEditText"
+                android:layout_width="match_parent"
+                android:textColor="@color/white"
+                app:boxStrokeColor="@color/white"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/locationBox"
@@ -52,13 +77,13 @@
             android:layout_marginHorizontal="24dp"
             android:hint="@string/location"
             android:textColorHint="@color/white"
-            android:visibility="gone"
+            android:visibility="visible"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fetchLocationBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fetchLocationBtn"
+            app:layout_constraintTop_toBottomOf="@+id/eventTitleBox"
             app:layout_constraintVertical_bias="0.0">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -71,14 +96,18 @@
 
         <Button
             android:id="@+id/fetchLocationBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
             android:text="@string/get_location"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/eventDescriptionBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/uploadImgGallery"
-            app:layout_constraintVertical_bias="0.01999998" />
+            app:layout_constraintTop_toBottomOf="@+id/locationBox" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/eventDescriptionBox"
@@ -89,10 +118,10 @@
             android:textColorHint="@color/white"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/eventDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationBox"
+            app:layout_constraintTop_toBottomOf="@+id/fetchLocationBtn"
             app:layout_constraintVertical_bias="0.06999999">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -113,18 +142,18 @@
             android:textColorHint="@color/white"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
-            app:layout_constraintBottom_toBottomOf="@id/contactDetails"
+            app:layout_constraintBottom_toTopOf="@id/contactDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventDescriptionBox"
-            app:layout_constraintVertical_bias="0.06999999">
+            app:layout_constraintVertical_bias="0.0">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/eventDateEditText"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:focusable="true"
-                android:textColor="@color/white"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,7 +166,7 @@
             android:textColorHint="@color/white"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
-            app:layout_constraintBottom_toBottomOf="@id/saveBtn"
+            app:layout_constraintBottom_toTopOf="@id/saveBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventDate"
@@ -153,10 +182,14 @@
 
         <Button
             android:id="@+id/uploadImgGallery"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            android:text="@string/gallery"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/white"
+            android:text="@string/upload"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -164,9 +197,14 @@
 
         <Button
             android:id="@+id/saveBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="128dp"
+            android:layout_marginEnd="128dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
             android:text="@string/save"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

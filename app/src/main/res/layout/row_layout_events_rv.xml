@@ -41,13 +41,13 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/eventsAddress"
+                android:id="@+id/eventsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif"
                 android:padding="5dp"
-                android:text="TextView"
+                tools:text="TextView"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
