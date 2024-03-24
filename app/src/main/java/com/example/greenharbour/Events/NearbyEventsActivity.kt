@@ -25,10 +25,8 @@ class NearbyEventsActivity : AppCompatActivity() {
         binding = ActivityNearbyEventsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        eventsList = ArrayList<Events>()
-        eventsViewAdapter = EventsViewAdapter(this@NearbyEventsActivity, eventsList)
-        binding.eventsRecyclerView.layoutManager = LinearLayoutManager(this@NearbyEventsActivity)
-        binding.eventsRecyclerView.adapter = eventsViewAdapter
+        eventsList = ArrayList()
+
         fetchEventListData()
 
 
@@ -48,6 +46,10 @@ class NearbyEventsActivity : AppCompatActivity() {
                 for(i in eventsList){
                     Log.d("NearbyEventActivity","image${i.eventImageUrl}")
                 }
+
+                eventsViewAdapter = EventsViewAdapter(this@NearbyEventsActivity, eventsList)
+                binding.eventsRecyclerView.layoutManager = LinearLayoutManager(this@NearbyEventsActivity)
+                binding.eventsRecyclerView.adapter = eventsViewAdapter
 
                 eventsViewAdapter.notifyDataSetChanged()
 

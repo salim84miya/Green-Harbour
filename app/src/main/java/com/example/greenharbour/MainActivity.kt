@@ -9,6 +9,8 @@ import com.example.greenharbour.Events.NearbyEventsActivity
 import com.example.greenharbour.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,16 +20,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.signOutBtn.setOnClickListener {
             Firebase.auth.signOut()
-            startActivity(Intent(this@MainActivity,LoginActivity::class.java))
+            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
             finish()
         }
 
         binding.createEventBtn.setOnClickListener {
-            startActivity(Intent(this@MainActivity,CreateEventsActivity::class.java))
+            startActivity(Intent(this@MainActivity, CreateEventsActivity::class.java))
         }
 
         binding.eventsViewBtn.setOnClickListener {
-            startActivity(Intent(this@MainActivity,NearbyEventsActivity::class.java))
+            startActivity(Intent(this@MainActivity, NearbyEventsActivity::class.java))
         }
 
 
