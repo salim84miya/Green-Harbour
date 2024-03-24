@@ -6,8 +6,8 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -25,13 +25,27 @@
         android:theme="@style/Theme.GreenHarbour"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".FirebaseCloudStorageTest"
             android:exported="false" />
         <activity
             android:name=".Events.NearbyEventsActivity"
+=======
+            android:name=".Events.EventDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Events.NearbyEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Events.MyEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Events.MyCreatedEventsActivity"
+>>>>>>> 4b69850f9bd6a11f1e56df67e5f6651f0002ac7d
             android:exported="false" />
         <activity
             android:name=".Events.CreateEventsActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
 
         <meta-data

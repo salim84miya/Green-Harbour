@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.greenharbour.Authorization.LoginActivity
 import com.example.greenharbour.Events.CreateEventsActivity
-import com.example.greenharbour.Events.NearbyEventsActivity
+import com.example.greenharbour.Events.MyEventActivity
+import com.example.greenharbour.Events.MyCreatedEventsActivity
+import com.example.greenharbour.Events.NearbyEventActivity
 import com.example.greenharbour.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -29,7 +31,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.eventsViewBtn.setOnClickListener {
+<<<<<<< HEAD
             startActivity(Intent(this@MainActivity, NearbyEventsActivity::class.java))
+=======
+            startActivity(Intent(this@MainActivity,NearbyEventActivity::class.java))
+        }
+
+        binding.myEventBtn.setOnClickListener {
+            startActivity(Intent(this@MainActivity,MyCreatedEventsActivity::class.java))
+>>>>>>> 4b69850f9bd6a11f1e56df67e5f6651f0002ac7d
         }
 
 
