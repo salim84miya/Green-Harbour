@@ -9,7 +9,10 @@ class Events() {
     var eventImageUrl:String? = null
     var eventDesc:String? = null
     var eventLocation:String? = null
+    var latitude:String? = null
+    var longitude:String? = null
     var eventDate:String? = null
+    var eventTime:String?= null
     var eventContact:String? = null
 
 

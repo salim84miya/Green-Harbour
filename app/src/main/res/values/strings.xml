@@ -20,4 +20,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="event_title">Event Title</string>
+    <string name="register">Register</string>
+    <string name="create_your_new_account">create your new account</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="ApiKey">AIzaSyCE-07OqyB1ze3XgMCta9qH95p4bhENiLg</string>
+    <string name="time">Time</string>
+    <string name="title_activity_event_map_view">EventMapViewActivity</string>
+
 </resources>

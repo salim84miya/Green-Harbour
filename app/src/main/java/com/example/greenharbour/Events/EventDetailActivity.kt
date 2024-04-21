@@ -1,9 +1,11 @@
 package com.example.greenharbour.Events
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -39,16 +41,10 @@ class EventDetailActivity : AppCompatActivity() {
         getData()
         fetchParticipatedList()
 
-            if (isParticipated){
-                binding.participateBtn.visibility = View.GONE
-            }else{
-                binding.participateBtn.setOnClickListener {
-                    showingAlertBox()
-            }
 
-
-        }
-
+binding.participateBtn.setOnClickListener {
+    showingAlertBox()
+}
 
 
 
@@ -86,12 +82,16 @@ class EventDetailActivity : AppCompatActivity() {
 
     private fun participate() {
 
+
+
         val email = Firebase.auth.currentUser!!.email.toString()
+        val data = hashMapOf(
+            "email" to email
+        )
+            Firebase.firestore.collection(eventTitle).document(Firebase.auth.currentUser!!.uid).set(data).addOnSuccessListener {
 
-        binding.participateBtn.setOnClickListener {
-            Firebase.firestore.collection(eventTitle).document(Firebase.auth.currentUser!!.uid).set(email).addOnSuccessListener {
-
-            }
+                binding.participateBtn.text = "Participated"
+                binding.participateBtn.visibility = View.VISIBLE
 
             val connection_string = "ParticipatedEvents"
             val participatedEvent = Events()
@@ -123,15 +123,23 @@ class EventDetailActivity : AppCompatActivity() {
             builder.show()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun fetchParticipatedList(){
         val email = Firebase.auth.currentUser!!.email.toString()
         Firebase.firestore.collection(eventTitle).get().addOnSuccessListener {
 
             for (document in it.documents){
-                val participants = document.toObject<String>()
-                if (participants.equals(email)){
+                val participants = document.getString("email")
+                if (participants==email){
                     isParticipated = true
+                    break
                 }
+            }
+            if(!isParticipated){
+                binding.participateBtn.visibility = View.VISIBLE
+            }else{
+                binding.participateBtn.text = "Participated"
+                binding.participateBtn.visibility = View.VISIBLE
             }
         }
     }

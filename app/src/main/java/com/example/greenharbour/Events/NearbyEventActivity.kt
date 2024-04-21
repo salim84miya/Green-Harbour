@@ -2,38 +2,57 @@ package com.example.greenharbour.Events
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.greenharbour.Adapters.EventsViewAdapter
 import com.example.greenharbour.Adapters.OnItemClickListener
 import com.example.greenharbour.Models.Events
+import com.example.greenharbour.Models.User
 import com.example.greenharbour.Utils.USER_EVENTS
+import com.example.greenharbour.Utils.calculateDistance
 import com.example.greenharbour.databinding.ActivityNearbyEventBinding
 import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 
 class NearbyEventActivity : AppCompatActivity(), OnItemClickListener<Events> {
 
-    private lateinit var binding:ActivityNearbyEventBinding
+    private lateinit var binding: ActivityNearbyEventBinding
     private lateinit var eventsList: ArrayList<Events>
     private lateinit var eventsViewAdapter: EventsViewAdapter
+    private var lat1: Double = 0.00
+    private var lang1: Double = 0.00
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityNearbyEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        eventsList = ArrayList()
-<<<<<<< HEAD:app/src/main/java/com/example/greenharbour/Events/NearbyEventsActivity.kt
+        Firebase.firestore.collection("Users").document(Firebase.auth.currentUser!!.uid).get()
+            .addOnSuccessListener {
+                if (it!=null && it.exists()){
+                    lat1 = it.get("latitude").toString().toDouble()
+                    lang1 = it.get("longitude").toString().toDouble()
 
-=======
-        eventsViewAdapter = EventsViewAdapter(this@NearbyEventActivity, eventsList,this@NearbyEventActivity)
+                }
+
+            }
+        eventsList = ArrayList()
+
+        eventsViewAdapter =
+            EventsViewAdapter(this@NearbyEventActivity, eventsList, this@NearbyEventActivity)
         binding.eventsRecyclerView.layoutManager = LinearLayoutManager(this@NearbyEventActivity)
         binding.eventsRecyclerView.adapter = eventsViewAdapter
->>>>>>> 4b69850f9bd6a11f1e56df67e5f6651f0002ac7d:app/src/main/java/com/example/greenharbour/Events/NearbyEventActivity.kt
         fetchEventListData()
+
+
+        //starting an map for map representation
+//        binding.floatingActionButton.setOnClickListener {
+//            startActivity(Intent(this@NearbyEventActivity,EventMapViewActivity::class.java))
+//        }
     }
 
     private fun fetchEventListData() {
@@ -42,22 +61,33 @@ class NearbyEventActivity : AppCompatActivity(), OnItemClickListener<Events> {
             if (!it.isEmpty) {
                 for (i in it.documents) {
                     val event = i.toObject<Events>()!!
-                    tempEventList.add(event)
+                    if (event.eventContact == Firebase.auth.currentUser!!.email.toString()) {
+                        continue
+                    }
+                        tempEventList.add(event)
                 }
                 eventsList.clear()
-                eventsList.addAll(tempEventList)
-
-<<<<<<< HEAD:app/src/main/java/com/example/greenharbour/Events/NearbyEventsActivity.kt
-                for(i in eventsList){
-                    Log.d("NearbyEventActivity","image${i.eventImageUrl}")
+                for (i in tempEventList) {
+                    if (calculateDistance(lat1,lang1,i.latitude!!.toDouble(),i.longitude!!.toDouble())>10){
+                        continue
+                    }
+                 eventsList.add(i)
                 }
 
-                eventsViewAdapter = EventsViewAdapter(this@NearbyEventsActivity, eventsList)
-                binding.eventsRecyclerView.layoutManager = LinearLayoutManager(this@NearbyEventsActivity)
+
+                for (i in eventsList) {
+                    Log.d("NearbyEventActivity", "image${i.eventImageUrl}")
+                }
+
+                eventsViewAdapter = EventsViewAdapter(
+                    this@NearbyEventActivity,
+                    eventsList,
+                    this@NearbyEventActivity
+                )
+                binding.eventsRecyclerView.layoutManager =
+                    LinearLayoutManager(this@NearbyEventActivity)
                 binding.eventsRecyclerView.adapter = eventsViewAdapter
 
-=======
->>>>>>> 4b69850f9bd6a11f1e56df67e5f6651f0002ac7d:app/src/main/java/com/example/greenharbour/Events/NearbyEventActivity.kt
                 eventsViewAdapter.notifyDataSetChanged()
             }
 
@@ -72,13 +102,13 @@ class NearbyEventActivity : AppCompatActivity(), OnItemClickListener<Events> {
         val eventImgUrl = view.eventImageUrl
         val eventTitle = view.eventName
 
-        val intent =   Intent(this@NearbyEventActivity,EventDetailActivity::class.java)
-        intent.putExtra("eventDesc",eventDesc)
-        intent.putExtra("eventImage",eventImgUrl)
-        intent.putExtra("eventDate",eventDate)
-        intent.putExtra("contact",contact)
-        intent.putExtra("location",location)
-        intent.putExtra("eventTitle",eventTitle)
+        val intent = Intent(this@NearbyEventActivity, EventDetailActivity::class.java)
+        intent.putExtra("eventDesc", eventDesc)
+        intent.putExtra("eventImage", eventImgUrl)
+        intent.putExtra("eventDate", eventDate)
+        intent.putExtra("contact", contact)
+        intent.putExtra("location", location)
+        intent.putExtra("eventTitle", eventTitle)
         startActivity(intent)
 
     }

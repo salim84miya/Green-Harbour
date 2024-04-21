@@ -3,6 +3,7 @@ package com.example.greenharbour.Authorization
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import com.bumptech.glide.Glide
@@ -23,7 +24,11 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
-        Glide.with(this).load(R.raw.leaves_flow).into(binding.leavesFlowImg)
+//        Glide.with(this).load(R.raw.leaves_flow).into(binding.leavesFlowImg)
+
+        val text =
+            "<font color=#808080>Don't have an account ? </font> <font color=#069563>Sign up</font>"
+        binding.SignUpText.setText(Html.fromHtml(text))
 
         binding.loginUpBtn.setOnClickListener {
             login = binding.Login.editText?.text.toString()

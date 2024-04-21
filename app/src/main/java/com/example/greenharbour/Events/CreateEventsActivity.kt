@@ -1,12 +1,7 @@
 package com.example.greenharbour.Events
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.icu.util.Calendar
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -17,17 +12,22 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import com.example.greenharbour.MainActivity
 import com.example.greenharbour.Models.Events
 import com.example.greenharbour.R
+import com.example.greenharbour.Utils.Geocoder
 import com.example.greenharbour.databinding.ActivityCreateEventsBinding
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -41,22 +41,20 @@ import java.util.UUID
 class CreateEventsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateEventsBinding
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var image_uri: Uri? = null
-    private val REQUEST_CODE = 102
-    private var latitude: Double = 0.0
-    private var longitude: Double = 0.0
+    private lateinit var latitude: String
+    private lateinit var longitude: String
     private var address: String = "random"
     private lateinit var description: String
     private lateinit var email: String
-    private lateinit var location: String
     private lateinit var eventTitle:String
-    private var gotLocation: Boolean = false
     private lateinit var event: Events
     private lateinit var eventDate: String
+    private lateinit var eventTime:String
     private val USER_EVENTS: String = "USER_EVENTS"
+    private val TAG = "autocomplete"
 
-    val selectImageIntent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+    private val selectImageIntent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) {
             binding.eventsImg.setImageURI(uri)
             image_uri = uri
@@ -72,9 +70,21 @@ class CreateEventsActivity : AppCompatActivity() {
 
         event = Events()
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         //adding event title
+        binding.eventTitleBoxEditText.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                eventTitle = p0.toString()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
         eventTitle = binding.eventTitleBoxEditText.text.toString()
 
 
@@ -82,13 +92,6 @@ class CreateEventsActivity : AppCompatActivity() {
         binding.uploadImgGallery.setOnClickListener {
             selectImageIntent.launch("image/*")
         }
-
-        //fetch current location
-        binding.fetchLocationBtn.setOnClickListener {
-            fetchLocation()
-            location = binding.locationEditText.text.toString()
-        }
-
 
         //fetch date
         binding.eventDateEditText.setOnClickListener {
@@ -98,6 +101,13 @@ class CreateEventsActivity : AppCompatActivity() {
             openDatePicker()
         }
 
+        //fetch time
+        binding.eventTime.setOnClickListener {
+            openTimePicker()
+        }
+        binding.eventTimeEditText.setOnClickListener {
+            openTimePicker()
+        }
 
         //adding contact details
         email = Firebase.auth.currentUser?.email.toString()
@@ -149,6 +159,44 @@ class CreateEventsActivity : AppCompatActivity() {
 
         })
 
+        //getting location
+        val apiKey = getString(R.string.ApiKey)
+        if (!Places.isInitialized()) {
+            Places.initialize(applicationContext,apiKey );
+        }
+        val placesClient = Places.createClient(this)
+
+
+
+        // Initialize the AutocompleteSupportFragment.
+        val autocompleteFragment =
+            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
+                    as AutocompleteSupportFragment
+
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                // TODO: Get info about the selected place.
+                Log.i(TAG, "Place: ${place.name}")
+                address = place.name.toString()
+
+                Geocoder.getLatLngFromAddress(this@CreateEventsActivity,address){lat,long->
+                    Log.d(TAG,"Latitude:${lat},Longitude $long")
+                    latitude = lat.toString()
+                    longitude = long.toString()
+                }
+
+            }
+
+            override fun onError(status: Status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: $status")
+            }
+        })
+
 
         //saving the data
         binding.saveBtn.setOnClickListener {
@@ -157,58 +205,6 @@ class CreateEventsActivity : AppCompatActivity() {
 
     }
 
-
-    //fetch current location
-    private fun fetchLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_CODE
-            )
-            return
-        }
-
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                if (location != null) {
-                    val latitude = location.latitude
-                    val longitude = location.longitude
-
-                    // Get address using Geocoder
-                    val geocoder = Geocoder(this, Locale.getDefault())
-                    val addresses: MutableList<Address>? =
-                        geocoder.getFromLocation(latitude, longitude, 1)
-                    if (addresses?.isNotEmpty() == true) {
-                        val address = addresses[0].getAddressLine(0)
-                        displayLocationDetails(latitude, longitude, address)
-                        Toast.makeText(
-                            this@CreateEventsActivity,
-                            "got location Successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        gotLocation = true
-                    } else {
-                        Log.e("CreateEventActivity", "Geocoder failed to get address")
-                        // Handle address retrieval failure
-                    }
-                } else {
-                    Log.d("CreateEventActivity", "Location is null")
-                    // Handle location unavailable error
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.e("CreateEventActivity", "Error fetching location: $e")
-                // Handle location retrieval failure
-            }
-    }
 
     private fun openDatePicker() {
 
@@ -232,6 +228,7 @@ class CreateEventsActivity : AppCompatActivity() {
             binding.eventDateEditText.setText(date)
 
         }
+
 
         binding.eventDateEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -266,25 +263,30 @@ class CreateEventsActivity : AppCompatActivity() {
         })
     }
 
-    private fun displayLocationDetails(latitude: Double, longitude: Double, address: String) {
+    private fun openTimePicker(){
+        val picker =
+            MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(12)
+                .setMinute(10)
+                .setTitleText("Select Appointment time")
+                .build()
 
-        this.latitude = latitude
-        this.longitude = longitude
-        this.address = address
+        picker.show(supportFragmentManager, "tag")
 
-        val eventLocationEditText =
-            binding.locationBox.editText?.findViewById<TextInputEditText>(R.id.locationEditText)
-
-        eventLocationEditText?.setText(address)
-        binding.locationBox.visibility = View.VISIBLE
+        picker.addOnPositiveButtonClickListener {
+            val selectedHour = if (picker.hour < 10) "0${picker.hour}" else "${picker.hour}"
+            val selectedMinute = if (picker.minute < 10) "0${picker.minute}" else "${picker.minute}"
+            val selectedTime = "$selectedHour:$selectedMinute"
+            eventTime = selectedTime
+            binding.eventTimeEditText.setText(selectedTime)
+        }
     }
 
     //validate all data
     private fun validateAll(): Boolean {
         return try {
-            validateDescription(description) && validateContactEmail(email) && validateLocation(
-                location
-            )
+            validateDescription(description) && validateContactEmail(email)
 
         } catch (e: Exception) {
             Log.d("CreateEventActivity", e.localizedMessage.toString())
@@ -339,17 +341,6 @@ class CreateEventsActivity : AppCompatActivity() {
         }
     }
 
-    //validate location
-    private fun validateLocation(address: String): Boolean {
-        return if (gotLocation) {
-            binding.locationBox.error = null // Clear any previous error message
-
-            true
-        } else {
-            binding.locationBox.error = "Please enter a valid address"
-            false
-        }
-    }
 
     private fun saveAllData() {
         if (validateAll()) {
@@ -361,6 +352,9 @@ class CreateEventsActivity : AppCompatActivity() {
             event.eventLocation = address
             event.eventDate = eventDate
             event.eventName = eventTitle
+            event.eventTime = eventTime
+            event.latitude = latitude
+            event.longitude = longitude
 
             try {
                 FirebaseStorage.getInstance().getReference("images")
