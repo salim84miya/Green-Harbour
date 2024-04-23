@@ -40,6 +40,7 @@ class EventViewFragment : Fragment() {
 
                 })
 
+//            val description = "<font color=#000000>Title ? </font> <font color=#069563>Login In</font>"
             binding.eventDescFr.text = it.eventDesc
             binding.eventLocationFr.text = it.eventLocation
             binding.contactFr.text = it.eventContact

@@ -26,6 +26,7 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="ApiKey">AIzaSyCE-07OqyB1ze3XgMCta9qH95p4bhENiLg</string>
+    <string name="GOOGLE_MAPS_API_KEY">AIzaSyCE-07OqyB1ze3XgMCta9qH95p4bhENiLg</string>
     <string name="time">Time</string>
     <string name="title_activity_event_map_view">EventMapViewActivity</string>
 

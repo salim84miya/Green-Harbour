@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
     tools:context=".EventFragments.EventViewFragment">
 
 
@@ -35,39 +35,36 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        tools:text="Title"
         android:textSize="24sp"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/eventDescFr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventImageView"
-        app:layout_constraintVertical_bias="0.00999999" />
+        app:layout_constraintVertical_bias="0.110000014"
+        tools:text="Title" />
 
 
     <TextView
         android:id="@+id/eventDescFr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16sp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         tools:text="Description"
         android:textSize="16sp"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/eventLocationFr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventTitleFr"
-        app:layout_constraintVertical_bias="0.00999999" />
+        app:layout_constraintTop_toBottomOf="@+id/eventTitleFr" />
 
     <TextView
         android:id="@+id/eventLocationFr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         tools:text="Location"
         android:textSize="14sp"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/eventDescFr"
         app:layout_constraintStart_toStartOf="@+id/eventDescFr"
         app:layout_constraintTop_toBottomOf="@+id/eventDescFr" />
@@ -76,10 +73,9 @@
         android:id="@+id/evDateFr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         tools:text="Date"
         android:textSize="14sp"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/eventLocationFr"
         app:layout_constraintStart_toStartOf="@+id/eventLocationFr"
         app:layout_constraintTop_toBottomOf="@+id/eventLocationFr" />
@@ -88,10 +84,8 @@
         android:id="@+id/contactFr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
         android:textSize="14sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/evDateFr"
         app:layout_constraintStart_toStartOf="@+id/evDateFr"
         app:layout_constraintTop_toBottomOf="@+id/evDateFr"

@@ -3,14 +3,28 @@
 
     <item
         android:id="@+id/first"
-        android:title="item 1"/>
+        android:title="voice assistant"/>
 
-    <item
-        android:id="@+id/second"
-        android:title="item 2"/>
+
 
     <item
         android:id="@+id/third"
-        android:title="third 3"/>
+        android:title="create barren"/>
+
+    <item
+        android:id="@+id/fourth"
+        android:title="plant watering"/>
+
+
+    <item
+        android:id="@+id/fifth"
+        android:title="know your plant"/>
+
+    <item
+        android:id="@+id/second"
+        android:title="signout"/>
+
+
+
 
 </menu>

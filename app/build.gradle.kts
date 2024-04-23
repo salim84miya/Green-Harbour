@@ -79,4 +79,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 
     implementation("com.google.android.libraries.places:places:3.4.0")
+
+    //volley api
+    implementation("com.android.volley:volley:1.2.1")
 }

@@ -184,23 +184,23 @@
 
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/signOutBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SignOut"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/myEventBtn"
-            app:layout_constraintVertical_bias="0.88" />
+<!--        <Button-->
+<!--            android:id="@+id/signOutBtn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="SignOut"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/myEventBtn"-->
+<!--            app:layout_constraintVertical_bias="0.88" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navView"
-        android:layout_marginTop="65dp"
+
         android:layout_width="wrap_content"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"

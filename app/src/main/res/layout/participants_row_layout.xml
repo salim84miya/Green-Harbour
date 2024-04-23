@@ -20,8 +20,10 @@
             android:id="@+id/participantView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#BFA8A8"
+            android:padding="8dp"
             android:textAlignment="viewStart"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
