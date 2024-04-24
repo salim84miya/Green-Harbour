@@ -27,7 +27,6 @@ class NearbyEventActivity : AppCompatActivity(), OnItemClickListener<Events> {
     private var lang1: Double = 0.00
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityNearbyEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -101,6 +100,7 @@ class NearbyEventActivity : AppCompatActivity(), OnItemClickListener<Events> {
         val location = view.eventLocation
         val eventImgUrl = view.eventImageUrl
         val eventTitle = view.eventName
+        val eventTime = view.eventTime
 
         val intent = Intent(this@NearbyEventActivity, EventDetailActivity::class.java)
         intent.putExtra("eventDesc", eventDesc)
@@ -109,6 +109,7 @@ class NearbyEventActivity : AppCompatActivity(), OnItemClickListener<Events> {
         intent.putExtra("contact", contact)
         intent.putExtra("location", location)
         intent.putExtra("eventTitle", eventTitle)
+        intent.putExtra("eventTime", eventTime)
         startActivity(intent)
 
     }

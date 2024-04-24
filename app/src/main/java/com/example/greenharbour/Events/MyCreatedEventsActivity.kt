@@ -3,6 +3,7 @@ package com.example.greenharbour.Events
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.greenharbour.Adapters.EventsViewAdapter
@@ -64,6 +65,7 @@ class MyCreatedEventsActivity : AppCompatActivity(),OnItemClickListener<Events> 
         val location = view.eventLocation
         val eventImgUrl = view.eventImageUrl
         val eventTitle = view.eventName
+        val eventTime = view.eventTime
 
          val intent =   Intent(this@MyCreatedEventsActivity,MyEventActivity::class.java)
         intent.putExtra("eventDesc",eventDesc)
@@ -72,6 +74,7 @@ class MyCreatedEventsActivity : AppCompatActivity(),OnItemClickListener<Events> 
         intent.putExtra("contact",contact)
         intent.putExtra("location",location)
         intent.putExtra("eventTitle",eventTitle)
+        intent.putExtra("eventTime",eventTime)
         startActivity(intent)
 
 //        Toast.makeText(this, "Event Desc: ${eventDesc} Event Date: ${eventDate} Contact :${contact} Location :${location}", Toast.LENGTH_SHORT).show()

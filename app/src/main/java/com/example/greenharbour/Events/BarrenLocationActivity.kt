@@ -40,6 +40,7 @@ class BarrenLocationActivity : AppCompatActivity() {
     private lateinit var eventTitle:String
     private lateinit var barrenLocation:BarrenLocation
     private val TAG = "autocomplete"
+    private val BARREN_EVENT :String= "BARREN_EVENT"
 
     private val selectImageIntent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) {
@@ -50,6 +51,10 @@ class BarrenLocationActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge(
+
+
+        )
         binding = ActivityBarrenLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -146,12 +151,13 @@ class BarrenLocationActivity : AppCompatActivity() {
             }
         })
 
+        //saving the data
+        binding.saveBtn.setOnClickListener {
+            saveAllData()
+        }
+
     }
 
-    //saving the data
-    binding.saveBtn.setOnClickListener {
-        saveAllData()
-    }
 
     //validate all data
     private fun validateAll(): Boolean {
@@ -193,42 +199,38 @@ class BarrenLocationActivity : AppCompatActivity() {
 
             binding.savingProgress.visibility = View.VISIBLE
 
-            barrenLocation.location = lo
-            event.eventContact = email
-            event.eventDesc = description
-            event.eventLocation = address
-            event.eventDate = eventDate
-            event.eventName = eventTitle
-            event.eventTime = eventTime
-            event.latitude = latitude
-            event.longitude = longitude
+            barrenLocation.location = address
+            barrenLocation.description = description
+            barrenLocation.title = eventTitle
+            barrenLocation.latitude = latitude
+            barrenLocation.longitude = longitude
 
             try {
                 FirebaseStorage.getInstance().getReference("images")
                     .child(System.currentTimeMillis().toString()).putFile(image_uri!!)
                     .addOnSuccessListener {
                         it.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
-                            event.eventImageUrl = it.toString()
+                            barrenLocation.img = it.toString()
 
                             val uid = UUID.randomUUID().toString()
 
-                            Firebase.firestore.collection(USER_EVENTS)
-                                .document(uid).set(event)
+                            Firebase.firestore.collection(BARREN_EVENT)
+                                .document(uid).set(barrenLocation)
                                 .addOnSuccessListener {
                                 }
 
-                            Firebase.firestore.collection(FirebaseAuth.getInstance().currentUser!!.uid)
-                                .document(uid).set(event)
+                            Firebase.firestore.collection("Barren event "+FirebaseAuth.getInstance().currentUser!!.uid)
+                                .document(uid).set(barrenLocation)
                                 .addOnSuccessListener {
                                     binding.savingProgress.visibility = View.GONE
                                     Toast.makeText(
-                                        this@CreateEventsActivity,
+                                        this@BarrenLocationActivity,
                                         "event created successfully",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                     startActivity(
                                         Intent(
-                                            this@CreateEventsActivity,
+                                            this@BarrenLocationActivity,
                                             MainActivity::class.java
                                         )
                                     )
@@ -242,7 +244,7 @@ class BarrenLocationActivity : AppCompatActivity() {
 
         } else {
             Toast.makeText(
-                this@CreateEventsActivity,
+                this@BarrenLocationActivity,
                 "please enter all the details properly",
                 Toast.LENGTH_SHORT
             ).show()

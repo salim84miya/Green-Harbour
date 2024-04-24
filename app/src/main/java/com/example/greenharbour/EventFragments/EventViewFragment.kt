@@ -1,5 +1,6 @@
 package com.example.greenharbour.EventFragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import com.example.greenharbour.Events.CreateEventsActivity
 import com.example.greenharbour.ViewModel.EventVIewModel
 import com.example.greenharbour.databinding.FragmentEventViewBinding
 import com.squareup.picasso.Callback
@@ -46,6 +48,28 @@ class EventViewFragment : Fragment() {
             binding.contactFr.text = it.eventContact
             binding.evDateFr.text = it.eventDate
             binding.eventTitleFr.text = it.eventName
+            binding.evTimeFr.text = it.eventTime
+
+            val eventTitle = it.eventName
+            val eventDesc = it.eventDesc
+            val eventLocation = it.eventLocation
+            val eventDate = it.eventDate
+            val eventTime = it.eventTime
+            val eventContact = it.eventContact
+            val eventImage = it.eventImageUrl
+
+            binding.edtBtn.setOnClickListener {
+                val intent = Intent(requireActivity(),CreateEventsActivity::class.java)
+                intent.putExtra("eventTitle",eventTitle)
+                intent.putExtra("eventDesc",eventDesc)
+                intent.putExtra("eventLocation",eventLocation)
+                intent.putExtra("eventDate",eventDate)
+                intent.putExtra("eventTime",eventTime)
+                intent.putExtra("eventContact",eventContact)
+                intent.putExtra("eventImage",eventImage)
+                intent.putExtra("MODE",2)
+                requireActivity().startActivity(intent)
+            }
         }
 
         return binding.root

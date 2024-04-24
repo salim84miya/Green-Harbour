@@ -2,17 +2,19 @@ package com.example.greenharbour
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.greenharbour.Authorization.LoginActivity
+import com.example.greenharbour.Events.BarrenLocationActivity
+import com.example.greenharbour.Events.BarrenLocationViewActivity
 import com.example.greenharbour.Events.CreateEventsActivity
 import com.example.greenharbour.Events.MyCreatedEventsActivity
+import com.example.greenharbour.Events.NearbyBarrenLocation
 import com.example.greenharbour.Events.NearbyEventActivity
 import com.example.greenharbour.Models.NetworkManager
 import com.example.greenharbour.databinding.ActivityMainBinding
@@ -41,7 +43,11 @@ class MainActivity : AppCompatActivity(){
 
         val user_email = navigationView.getHeaderView(0).findViewById<TextView>(R.id.email)
         val user_username = navigationView.getHeaderView(0).findViewById<TextView>(R.id.username)
+        val user_profile = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.profile_image)
 
+        user_profile.setOnClickListener {
+            startActivity(Intent(this@MainActivity,UserAccountActivity::class.java))
+        }
         Firebase.firestore.collection("Users").document(Firebase.auth.currentUser!!.uid).get()
             .addOnSuccessListener {
                 if (it!=null && it.exists()){
@@ -68,9 +74,19 @@ class MainActivity : AppCompatActivity(){
                     startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                     finish()
                 }
+                R.id.third->{
+                    startActivity(Intent(this@MainActivity,BarrenLocationActivity::class.java))
+                }
+                R.id.sixth->{
+                    startActivity(Intent(this@MainActivity,BarrenLocationViewActivity::class.java))
+                }
 
             }
             true
+        }
+
+        binding.barrenLocationBtn.setOnClickListener {
+            startActivity(Intent(this@MainActivity,NearbyBarrenLocation::class.java))
         }
 
         dialog = MaterialAlertDialogBuilder(this,R.style.MaterialAlertDialog_Rounded)
@@ -91,14 +107,6 @@ class MainActivity : AppCompatActivity(){
 
         }
 
-
-
-
-//        binding.signOutBtn.setOnClickListener {
-//            Firebase.auth.signOut()
-//            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-//            finish()
-//        }
 
         binding.createEventBtn.setOnClickListener {
             startActivity(Intent(this@MainActivity, CreateEventsActivity::class.java))

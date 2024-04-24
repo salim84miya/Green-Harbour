@@ -53,6 +53,7 @@ class EventParticipationFragment : Fragment() {
         Firebase.firestore.collection(eventName).get().addOnSuccessListener {
             val tempEventList = ArrayList<String>()
             if (!it.isEmpty) {
+                binding.noParticipationText.visibility = View.GONE
                 for (document in it) {
                     val participant = document.getString("email")
                     if (participant != null) {
@@ -70,6 +71,8 @@ class EventParticipationFragment : Fragment() {
 
 
 
+            }else{
+                binding.noParticipationText.visibility = View.VISIBLE
             }
 
         }

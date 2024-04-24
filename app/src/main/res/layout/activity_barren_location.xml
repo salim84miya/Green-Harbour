@@ -66,7 +66,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/eventTitleBoxEditText"
                 android:layout_width="match_parent"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 app:boxStrokeColor="@color/white"
                 android:layout_height="wrap_content" />
 
@@ -107,7 +107,7 @@
                 android:id="@+id/eventDescriptionBoxEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 app:boxStrokeColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>

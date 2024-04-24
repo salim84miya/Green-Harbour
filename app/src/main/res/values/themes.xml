@@ -12,6 +12,12 @@
         <item name="android:colorAccent">#07432E</item>
     </style>
 
+    <style name="Theme.GreenHarbour.Sub" parent="Base.Theme.GreenHarbour" >
+        <item name="android:colorPrimary">#069563</item>
+        <item name="android:colorPrimaryDark">#069563</item>
+        <item name="android:colorAccent">#069563</item>
+    </style>
+
     <style name="Theme.GreenHarbour" parent="Base.Theme.GreenHarbour"/>
 
     <style name="MaterialAlertDialog_Rounded" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">

@@ -30,74 +30,177 @@
         app:layout_constraintTop_toTopOf="@+id/eventImageView" />
 
     <TextView
+        android:id="@+id/eventTitleFrHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="8dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventImageView"
+        android:text="Title :" />
+
+    <TextView
         android:id="@+id/eventTitleFr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/eventDescFr"
+        android:layout_marginHorizontal="8dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/eventTitleFrHeading"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventImageView"
-        app:layout_constraintVertical_bias="0.110000014"
-        tools:text="Title" />
+        app:layout_constraintStart_toEndOf="@+id/eventTitleFrHeading"
+        app:layout_constraintTop_toTopOf="@+id/eventTitleFrHeading"
+        tools:text="Title " />
 
+
+    <TextView
+        android:id="@+id/eventDescFrHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventTitleFr"
+        android:text="Description :" />
 
     <TextView
         android:id="@+id/eventDescFr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16sp"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        tools:text="Description"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/eventLocationFr"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/eventDescFrHeading"
+        app:layout_constraintTop_toBottomOf="@+id/eventDescFrHeading"
+        tools:text="Description" />
+
+    <TextView
+        android:id="@+id/eventLocationFrHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Location :"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventTitleFr" />
+        app:layout_constraintTop_toBottomOf="@+id/eventDescFr" />
 
     <TextView
         android:id="@+id/eventLocationFr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="8dp"
         tools:text="Location"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/eventDescFr"
-        app:layout_constraintStart_toStartOf="@+id/eventDescFr"
-        app:layout_constraintTop_toBottomOf="@+id/eventDescFr" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/eventLocationFrHeading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/eventLocationFrHeading"
+        app:layout_constraintTop_toTopOf="@id/eventLocationFrHeading" />
+
+    <TextView
+        android:id="@+id/evDateFrHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Date :"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.040"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventLocationFrHeading" />
 
     <TextView
         android:id="@+id/evDateFr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        tools:text="Date"
-        android:textSize="14sp"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/evDateFrHeading"
         app:layout_constraintEnd_toEndOf="@+id/eventLocationFr"
-        app:layout_constraintStart_toStartOf="@+id/eventLocationFr"
-        app:layout_constraintTop_toBottomOf="@+id/eventLocationFr" />
+        app:layout_constraintStart_toEndOf="@+id/evDateFrHeading"
+        app:layout_constraintTop_toTopOf="@+id/evDateFrHeading"
+        tools:text="Date" />
+
+    <TextView
+        android:id="@+id/evTimeFrHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Time :"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_bias="0.040"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/evDateFrHeading" />
+
+    <TextView
+        android:id="@+id/evTimeFr"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/evTimeFrHeading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/evTimeFrHeading"
+        app:layout_constraintTop_toTopOf="@+id/evTimeFrHeading"
+        tools:text="Time" />
+    <TextView
+        android:id="@+id/contactFrHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/evTimeFrHeading"
+        android:text="contact :" />
 
     <TextView
         android:id="@+id/contactFr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/evDateFr"
-        app:layout_constraintStart_toStartOf="@+id/evDateFr"
-        app:layout_constraintTop_toBottomOf="@+id/evDateFr"
+        android:layout_marginHorizontal="8dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/contactFrHeading"
+        app:layout_constraintTop_toTopOf="@+id/contactFrHeading"
         tools:text="contact" />
 
     <Button
-        android:id="@+id/edftBtn"
+        android:id="@+id/edtBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Edit"
-        app:layout_constraintEnd_toEndOf="@+id/contactFr"
-        app:layout_constraintStart_toStartOf="@+id/contactFr"
-        app:layout_constraintTop_toBottomOf="@+id/contactFr" />
+        android:padding="10dp"
+        android:backgroundTint="@color/green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contactFr"
+        app:layout_constraintVertical_bias="0.23000002" />
 </androidx.constraintlayout.widget.ConstraintLayout>

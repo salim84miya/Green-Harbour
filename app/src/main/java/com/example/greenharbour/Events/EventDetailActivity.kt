@@ -31,6 +31,7 @@ class EventDetailActivity : AppCompatActivity() {
     private lateinit var contact: String
     private lateinit var location: String
     private lateinit var eventTitle: String
+    private lateinit var eventTime: String
     private var isParticipated = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +60,7 @@ binding.participateBtn.setOnClickListener {
         contact = intent.getStringExtra("contact").toString()
         location = intent.getStringExtra("location").toString()
         eventTitle = intent.getStringExtra("eventTitle").toString()
+        eventTime = intent.getStringExtra("eventTime").toString()
 
         Picasso.get().load(eventImageUrl)
             .into(binding.eventImageView, object : Callback {
@@ -77,6 +79,7 @@ binding.participateBtn.setOnClickListener {
         binding.contactFr.text = contact
         binding.evDateFr.text = eventDate
         binding.eventTitleFr.text = eventTitle
+        binding.evTimeFr.text = eventTime
 
     }
 
@@ -88,7 +91,7 @@ binding.participateBtn.setOnClickListener {
         val data = hashMapOf(
             "email" to email
         )
-            Firebase.firestore.collection(eventTitle).document(Firebase.auth.currentUser!!.uid).set(data).addOnSuccessListener {
+         Firebase.firestore.collection(eventTitle).document(Firebase.auth.currentUser!!.uid).set(data).addOnSuccessListener {
 
                 binding.participateBtn.text = "Participated"
                 binding.participateBtn.visibility = View.VISIBLE

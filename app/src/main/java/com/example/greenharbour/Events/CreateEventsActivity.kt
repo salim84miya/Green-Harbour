@@ -33,6 +33,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -69,6 +71,7 @@ class CreateEventsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         event = Events()
+
 
 
         //adding event title
@@ -197,6 +200,30 @@ class CreateEventsActivity : AppCompatActivity() {
             }
         })
 
+        if (intent.getIntExtra("MODE",-1)==1){
+            binding.eventTitleBoxEditText.setText(intent.getStringExtra("eventTitle").toString())
+            binding.eventDescriptionBoxEditText.setText(intent.getStringExtra("eventDesc").toString())
+            autocompleteFragment.setText(intent.getStringExtra("location").toString())
+        }
+
+        if(intent.getIntExtra("MODE",-1)==2){
+            val eventDesc =    intent.getStringExtra("eventDesc")
+            val eventImageUrl =    intent.getStringExtra("eventImage")
+            val eventDate =    intent.getStringExtra("eventDate")
+            val contact =    intent.getStringExtra("eventContact")
+            val location =    intent.getStringExtra("eventLocation")
+            val eventTitle = intent.getStringExtra("eventTitle")
+            val eventTime = intent.getStringExtra("eventTime")
+
+            binding.eventTitleBoxEditText.setText(eventTitle.toString())
+            binding.eventDescriptionBoxEditText.setText(eventDesc.toString())
+            autocompleteFragment.setText(location.toString())
+            binding.eventTimeEditText.setText(eventTime.toString())
+            binding.contactDetailsEditText.setText(contact.toString())
+            binding.eventDateEditText.setText(eventDate.toString())
+            Picasso.get().load(eventImageUrl)
+                .into(binding.eventsImg)
+        }
 
         //saving the data
         binding.saveBtn.setOnClickListener {
@@ -345,6 +372,7 @@ class CreateEventsActivity : AppCompatActivity() {
     private fun saveAllData() {
         if (validateAll()) {
 
+
             binding.savingProgress.visibility = View.VISIBLE
 
             event.eventContact = email
@@ -357,6 +385,45 @@ class CreateEventsActivity : AppCompatActivity() {
             event.longitude = longitude
 
             try {
+                if (intent.getIntExtra("MODE",-1)==2){
+
+                    FirebaseStorage.getInstance().getReference("images")
+                        .child(System.currentTimeMillis().toString()).putFile(image_uri!!)
+                        .addOnSuccessListener {
+                            it.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                                val updates = hashMapOf<String, Any>(
+                                    "eventContact" to email,
+                                    "eventDate" to eventDate,
+                                    "eventDesc" to description,
+                                    "eventLocation" to address,
+                                    "eventName" to eventTitle,
+                                    "eventTime" to eventTime,
+                                    "eventImageUrl" to it.toString()
+                                )
+
+                                Firebase.firestore.collection(FirebaseAuth.getInstance().currentUser!!.uid)
+                                    .document(eventTitle).update(updates)
+                                    .addOnSuccessListener {
+                                        binding.savingProgress.visibility = View.GONE
+                                        Toast.makeText(
+                                            this@CreateEventsActivity,
+                                            "event updated successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        startActivity(
+                                            Intent(
+                                                this@CreateEventsActivity,
+                                                MainActivity::class.java
+                                            )
+                                        )
+                                        finish()
+                                    }
+
+                            }
+                        }
+
+                }
+
                 FirebaseStorage.getInstance().getReference("images")
                     .child(System.currentTimeMillis().toString()).putFile(image_uri!!)
                     .addOnSuccessListener {

@@ -24,8 +24,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GreenHarbour"
+        android:theme="@style/Theme.GreenHarbour.Sub"
         tools:targetApi="31">
+        <activity
+            android:name=".Events.NearbyBarrenLocation"
+            android:exported="false" />
+        <activity
+            android:name=".Events.BarrenEventDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Events.BarrenLocationViewActivity"
+            android:exported="false" />
         <activity
             android:name=".Events.BarrenLocationActivity"
             android:exported="false" />
@@ -57,7 +66,8 @@
             android:exported="false" />
         <activity
             android:name=".Events.NearbyEventActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.GreenHarbour.Sub"/>
         <activity
             android:name=".Events.MyEventActivity"
             android:exported="false"

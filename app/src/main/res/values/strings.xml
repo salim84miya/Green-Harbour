@@ -2,6 +2,7 @@
     <string name="app_name">GreenHarbour</string>
     <string name="login">Login</string>
     <string name="username">Username</string>
+    <string name="username2">Username :</string>
     <string name="password">Password</string>
     <string name="join_the">Join the Group</string>
     <string name="welcome_back">Welcome Back</string>
